@@ -17,6 +17,7 @@ const ChannelDetail = () => {
       (data) => setVideos(data?.items)
     );
   }, [id]);
+
   return (
     <Box minHeight="95vh">
       <Box>
@@ -28,7 +29,11 @@ const ChannelDetail = () => {
             height: "300px",
           }}
         />
-        <ChannelCard channelDetail={channelDetail} marginTop="-93px" />
+        <ChannelCard
+          // onClick={handleClick}
+          channelDetail={channelDetail}
+          marginTop="-93px"
+        />
       </Box>
       <Box display="flex" p={2}>
         <Box

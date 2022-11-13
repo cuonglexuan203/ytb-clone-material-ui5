@@ -1,19 +1,25 @@
 import { Box, CardContent, CardMedia, Typography } from "@mui/material";
 import { CheckCircle } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { demoProfilePicture } from "../utils/constants";
 import { useState, useEffect } from "react";
 import { fetchFromAPI } from "../utils/fetchFromAPI";
+import ChannelDetail from "./ChannelDetail";
 
 const ChannelCard = ({ channelDetail, marginTop }) => {
   const [subscriber, setSubscriber] = useState(0);
   const channelId = channelDetail?.id?.channelId;
+  const id = useParams();
   useEffect(() => {
     fetchFromAPI(`channels?part=snippet&id=${channelId}`).then((data) =>
       setSubscriber(data?.items[0])
     );
   }, [channelId]);
 
+  // console.log(id);
+  let handleClick = (e) => {
+    e.preventDefault();
+  };
   return (
     <Box
       sx={{
@@ -31,7 +37,10 @@ const ChannelCard = ({ channelDetail, marginTop }) => {
         marginTop,
       }}
     >
-      <Link to={`/channel/${channelDetail?.id?.channelId}`}>
+      <Link
+        onClick={id.id ? handleClick : () => {}}
+        to={`/channel/${channelDetail?.id?.channelId}`}
+      >
         <CardContent
           sx={{
             display: "flex",
@@ -66,10 +75,13 @@ const ChannelCard = ({ channelDetail, marginTop }) => {
               color: "gray",
             }}
           >
-            {subscriber?.statistics?.subscriberCount ||
-              parseInt(
-                channelDetail?.statistics?.subscriberCount
-              ).toLocaleString("en-US")}{" "}
+            {isNaN(subscriber?.statistics?.subscriberCount)
+              ? parseInt(
+                  channelDetail?.statistics?.subscriberCount
+                ).toLocaleString("en-US")
+              : parseInt(
+                  subscriber?.statistics?.subscriberCount
+                ).toLocaleString("en-US")}{" "}
             Subscribers
           </Typography>
         </CardContent>

@@ -20,6 +20,7 @@ const VideoDetail = () => {
       (data) => setVideos(data.items)
     );
   }, [id]);
+  // console.log("This is videodetails", videoDetail);
   if (!videoDetail?.snippet) return "Loading...";
   const {
     snippet: { title, channelId, channelTitle },
@@ -36,15 +37,16 @@ const VideoDetail = () => {
         <Box flex={1}>
           <Box
             sx={{
+              pt: 1,
               width: "100%",
-              position: "sticky",
-              top: "86px",
+              // position: "sticky",
+              // top: "86px",
             }}
           >
             <ReactPlayer
               url={`https://www.youtube.com/watch?v=${id}`}
               className="react-player"
-              constrols
+              controls
             />
             <Typography color="#fff" variant="h5" fontWeight="bold" p={2}>
               {title}
@@ -58,7 +60,7 @@ const VideoDetail = () => {
               py={1}
               px={2}
             >
-              <Link to="/channel/${channelId}">
+              <Link to={`/channel/${channelId}`}>
                 <Typography
                   variant="{{
                     sm: 'subtitle1',
